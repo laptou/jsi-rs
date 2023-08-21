@@ -1,0 +1,15 @@
+[package]
+name = "jsi-tests"
+version = "0.1.0"
+edition = "2021"
+links = "hermes"
+
+[dependencies]
+cxx = "1.0"
+anyhow = "1.0"
+jsi-sys = { path = "../jsi-sys" }
+jsi = { path = "../jsi" }
+
+[build-dependencies]
+cxx-build = "1.0"
+dunce = "1.0"

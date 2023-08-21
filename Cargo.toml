@@ -1,0 +1,9 @@
+[workspace]
+members = [
+  "jsi-sys",
+  "jsi-macros",
+  "jsi",
+  "js-api",
+  "js-tests",
+]
+resolver = "2"

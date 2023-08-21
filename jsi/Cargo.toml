@@ -1,0 +1,17 @@
+[package]
+name = "jsi"
+version = "0.3.0"
+edition = "2021"
+
+[dependencies]
+jsi-sys = { path = "../jsi-sys" }
+cxx = "1.0"
+anyhow = "1.0"
+log = { version = "0.4", optional = true }
+better_any = "0.1.1"
+
+[features]
+default = ["host-fn-trace", "call-invoker-trace", "js-fn-trace"]
+host-fn-trace = ["log"]
+js-fn-trace = ["log"]
+call-invoker-trace = ["log"]

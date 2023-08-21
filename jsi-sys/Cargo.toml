@@ -1,0 +1,13 @@
+[package]
+name = "jsi-sys"
+version = "0.1.0"
+edition = "2021"
+links = "jsi"
+
+[dependencies]
+cxx = "1.0"
+anyhow = "1.0"
+
+[build-dependencies]
+cxx-build = "1.0"
+dunce = "1.0"
