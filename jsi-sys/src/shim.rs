@@ -9,14 +9,14 @@ impl HostObject {
         rt: Pin<&mut Runtime>,
         name: &PropNameID,
     ) -> UniquePtr<JsiValue> {
-        HostObject_get(self, rt, name)
+        unsafe { HostObject_get(self, rt, name) }
     }
 
     pub fn get_property_names(
         self: Pin<&mut HostObject>,
         rt: Pin<&mut Runtime>,
     ) -> UniquePtr<CxxVector<PropNameID>> {
-        HostObject_getPropertyNames(self, rt)
+        unsafe { HostObject_getPropertyNames(self, rt) }
     }
 }
 
@@ -53,12 +53,14 @@ pub(crate) fn rho_properties(
     rho: &mut RustHostObject,
     rt: Pin<&mut Runtime>,
 ) -> UniquePtr<CxxVector<PropNameID>> {
-    let props = rho.0.properties(rt);
-    let mut vec = create_prop_name_vector();
-    for prop in props {
-        push_prop_name_vector(vec.pin_mut(), prop);
+    unsafe {
+        let props = rho.0.properties(rt);
+        let mut vec = create_prop_name_vector();
+        for prop in props {
+            push_prop_name_vector(vec.pin_mut(), prop);
+        }
+        vec
     }
-    vec
 }
 
 pub trait HostObjectImpl {
@@ -82,7 +84,7 @@ impl Runtime {
         buffer: &SharedPtr<Buffer>,
         source_url: &str,
     ) -> UniquePtr<JsiValue> {
-        Runtime_evaluateJavaScript(self, buffer, source_url)
+        unsafe { Runtime_evaluateJavaScript(self, buffer, source_url) }
     }
 
     pub fn prepare_javascript(
@@ -90,170 +92,170 @@ impl Runtime {
         buffer: &SharedPtr<Buffer>,
         source_url: &str,
     ) -> SharedPtr<ConstPreparedJavaScript> {
-        Runtime_prepareJavaScript(self, buffer, source_url)
+        unsafe { Runtime_prepareJavaScript(self, buffer, source_url) }
     }
 
     pub fn evaluate_prepared_javascript(
         self: Pin<&mut Runtime>,
         js: &SharedPtr<ConstPreparedJavaScript>,
     ) -> UniquePtr<JsiValue> {
-        Runtime_evaluatePreparedJavaScript(self, &js)
+        unsafe { Runtime_evaluatePreparedJavaScript(self, &js) }
     }
 
     pub fn global(self: Pin<&mut Runtime>) -> UniquePtr<JsiObject> {
-        Runtime_global(self)
+        unsafe { Runtime_global(self) }
     }
 
     pub fn description(self: Pin<&mut Runtime>) -> UniquePtr<CxxString> {
-        Runtime_description(self)
+        unsafe { Runtime_description(self) }
     }
 }
 
 impl PropNameID {
     pub fn from_str(rt: Pin<&mut Runtime>, s: &str) -> UniquePtr<Self> {
-        PropNameID_forUtf8(rt, s)
+        unsafe { PropNameID_forUtf8(rt, s) }
     }
 
     pub fn from_jsi_string(rt: Pin<&mut Runtime>, s: &JsiString) -> UniquePtr<Self> {
-        PropNameID_forString(rt, s)
+        unsafe { PropNameID_forString(rt, s) }
     }
 
     pub fn to_string(&self, rt: Pin<&mut Runtime>) -> UniquePtr<CxxString> {
-        PropNameID_toUtf8(self, rt)
+        unsafe { PropNameID_toUtf8(self, rt) }
     }
 
     pub fn compare(&self, other: &Self, rt: Pin<&mut Runtime>) -> bool {
-        PropNameID_compare(rt, self, other)
+        unsafe { PropNameID_compare(rt, self, other) }
     }
 }
 
 impl JsiSymbol {
     pub fn to_string(&self, rt: Pin<&mut Runtime>) -> UniquePtr<CxxString> {
-        Symbol_toString(self, rt)
+        unsafe { Symbol_toString(self, rt) }
     }
 
     pub fn compare(&self, other: &Self, rt: Pin<&mut Runtime>) -> bool {
-        Symbol_compare(rt, self, other)
+        unsafe { Symbol_compare(rt, self, other) }
     }
 }
 
 impl JsiString {
     pub fn from_str(rt: Pin<&mut Runtime>, s: &str) -> UniquePtr<Self> {
-        String_fromUtf8(rt, s)
+        unsafe { String_fromUtf8(rt, s) }
     }
 
     pub fn to_string(&self, rt: Pin<&mut Runtime>) -> UniquePtr<CxxString> {
-        String_toString(self, rt)
+        unsafe { String_toString(self, rt) }
     }
 
     pub fn compare(&self, other: &Self, rt: Pin<&mut Runtime>) -> bool {
-        String_compare(rt, self, other)
+        unsafe { String_compare(rt, self, other) }
     }
 }
 
 impl JsiObject {
     pub fn new(rt: Pin<&mut Runtime>) -> UniquePtr<Self> {
-        Object_create(rt)
+        unsafe { Object_create(rt) }
     }
 
     pub fn from_host_object(rt: Pin<&mut Runtime>, ho: SharedPtr<HostObject>) -> UniquePtr<Self> {
-        Object_createFromHostObjectShared(rt, ho)
+        unsafe { Object_createFromHostObjectShared(rt, ho) }
     }
 
     pub fn compare(&self, other: &Self, rt: Pin<&mut Runtime>) -> bool {
-        Object_compare(rt, self, other)
+        unsafe { Object_compare(rt, self, other) }
     }
 
     pub fn get_property(&self, rt: Pin<&mut Runtime>, prop: &PropNameID) -> UniquePtr<JsiValue> {
-        Object_getProperty(self, rt, prop)
+        unsafe { Object_getProperty(self, rt, prop) }
     }
 
     pub fn set_property(
         self: Pin<&mut Self>,
         rt: Pin<&mut Runtime>,
         prop: &PropNameID,
-        value: UniquePtr<JsiValue>,
+        value: &JsiValue,
     ) {
-        Object_setProperty(self, rt, prop, value)
+        unsafe { Object_setProperty(self, rt, prop, value) }
     }
 
     pub fn as_array(&self, rt: Pin<&mut Runtime>) -> Option<UniquePtr<JsiArray>> {
-        Object_asArray(self, rt).ok()
+        unsafe { Object_asArray(self, rt).ok() }
     }
 
     pub fn as_array_buffer(&self, rt: Pin<&mut Runtime>) -> Option<UniquePtr<JsiArrayBuffer>> {
-        Object_asArrayBuffer(self, rt).ok()
+        unsafe { Object_asArrayBuffer(self, rt).ok() }
     }
 
     pub fn as_function(&self, rt: Pin<&mut Runtime>) -> Option<UniquePtr<JsiFunction>> {
-        Object_asFunction(self, rt).ok()
+        unsafe { Object_asFunction(self, rt).ok() }
     }
 
     pub fn get_property_names(self: Pin<&mut Self>, rt: Pin<&mut Runtime>) -> UniquePtr<JsiArray> {
-        Object_getPropertyNames(self, rt)
+        unsafe { Object_getPropertyNames(self, rt) }
     }
 }
 
 impl JsiValue {
-    pub fn create_undefined() -> UniquePtr<Self> {
-        Value_fromUndefined()
+    pub fn undefined() -> UniquePtr<Self> {
+        unsafe { Value_fromUndefined() }
     }
 
-    pub fn create_null() -> UniquePtr<Self> {
-        Value_fromNull()
+    pub fn null() -> UniquePtr<Self> {
+        unsafe { Value_fromNull() }
     }
 
-    pub fn create_int(i: i32) -> UniquePtr<Self> {
-        Value_fromInt(i)
+    pub fn int(i: i32) -> UniquePtr<Self> {
+        unsafe { Value_fromInt(i) }
     }
 
-    pub fn create_bool(b: bool) -> UniquePtr<Self> {
-        Value_fromBool(b)
+    pub fn bool(b: bool) -> UniquePtr<Self> {
+        unsafe { Value_fromBool(b) }
     }
 
-    pub fn create_double(d: f64) -> UniquePtr<Self> {
-        Value_fromDouble(d)
+    pub fn double(d: f64) -> UniquePtr<Self> {
+        unsafe { Value_fromDouble(d) }
     }
 
-    pub fn copy_object(rt: Pin<&mut Runtime>, o: &JsiObject) -> UniquePtr<Self> {
-        Value_copyFromObject(rt, o)
+    pub fn object(rt: Pin<&mut Runtime>, o: &JsiObject) -> UniquePtr<Self> {
+        unsafe { Value_copyFromObject(rt, o) }
     }
 
-    pub fn copy_symbol(rt: Pin<&mut Runtime>, s: &JsiSymbol) -> UniquePtr<Self> {
-        Value_copyFromSymbol(rt, s)
+    pub fn symbol(rt: Pin<&mut Runtime>, s: &JsiSymbol) -> UniquePtr<Self> {
+        unsafe { Value_copyFromSymbol(rt, s) }
     }
 
-    pub fn copy_string(rt: Pin<&mut Runtime>, s: &JsiString) -> UniquePtr<Self> {
-        Value_copyFromString(rt, s)
+    pub fn string(rt: Pin<&mut Runtime>, s: &JsiString) -> UniquePtr<Self> {
+        unsafe { Value_copyFromString(rt, s) }
     }
 
     pub fn from_json(rt: Pin<&mut Runtime>, json: &str) -> UniquePtr<Self> {
-        Value_fromJson(rt, json)
+        unsafe { Value_fromJson(rt, json) }
     }
 
     pub fn as_object(&self, rt: Pin<&mut Runtime>) -> Result<UniquePtr<JsiObject>, cxx::Exception> {
-        Value_asObject(self, rt)
+        unsafe { Value_asObject(self, rt) }
     }
 
     pub fn as_symbol(&self, rt: Pin<&mut Runtime>) -> Result<UniquePtr<JsiSymbol>, cxx::Exception> {
-        Value_asSymbol(self, rt)
+        unsafe { Value_asSymbol(self, rt) }
     }
 
     pub fn as_string(&self, rt: Pin<&mut Runtime>) -> Result<UniquePtr<JsiString>, cxx::Exception> {
-        Value_asString(self, rt)
+        unsafe { Value_asString(self, rt) }
     }
 
     pub fn to_string(&self, rt: Pin<&mut Runtime>) -> UniquePtr<JsiString> {
-        Value_toString(self, rt)
+        unsafe { Value_toString(self, rt) }
     }
 }
 
 impl JsiWeakObject {
     pub fn from_object(rt: Pin<&mut Runtime>, object: &JsiObject) -> UniquePtr<Self> {
-        WeakObject_fromObject(rt, object)
+        unsafe { WeakObject_fromObject(rt, object) }
     }
 
     pub fn lock(self: Pin<&mut Self>, rt: Pin<&mut Runtime>) -> UniquePtr<JsiValue> {
-        WeakObject_lock(self, rt)
+        unsafe { WeakObject_lock(self, rt) }
     }
 }

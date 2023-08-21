@@ -134,7 +134,7 @@ pub mod ffi {
         pub fn Object_compare(rt: Pin<&mut Runtime>, lhs: &JsiObject, rhs: &JsiObject) -> bool;
         #[cxx_name = "instanceOf"]
         pub fn instance_of(
-            self: Pin<&mut JsiObject>,
+            self: &JsiObject,
             rt: Pin<&mut Runtime>,
             ctor: &JsiFunction,
         ) -> bool;
@@ -151,7 +151,7 @@ pub mod ffi {
             _self: Pin<&mut JsiObject>,
             rt: Pin<&mut Runtime>,
             prop: &PropNameID,
-            value: UniquePtr<JsiValue>,
+            value: &JsiValue,
         );
         #[cxx_name = "isArray"]
         pub fn is_array(self: &JsiObject, rt: Pin<&mut Runtime>) -> bool;
@@ -223,7 +223,7 @@ pub mod ffi {
 
         #[cxx_name = "ArrayBuffer"]
         pub type JsiArrayBuffer;
-        pub unsafe fn data(self: Pin<&mut JsiArrayBuffer>, rt: Pin<&mut Runtime>) -> *mut u8;
+        pub unsafe fn data(self: &JsiArrayBuffer, rt: Pin<&mut Runtime>) -> *mut u8;
         pub fn length(self: &JsiArrayBuffer, rt: Pin<&mut Runtime>) -> usize;
 
         #[cxx_name = "Function"]
