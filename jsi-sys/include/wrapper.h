@@ -11,7 +11,7 @@
 #include <jsi/jsi.h>
 #include <rust/cxx.h>
 
-namespace splicer
+namespace jsi_rs
 {
   namespace ffi
   {
@@ -341,8 +341,8 @@ namespace splicer
         size_t index,
         Value const &value)
     {
-      void (::facebook::jsi::Array::*fp)(Runtime &, size_t, Value const &) = &::facebook::jsi::Array::setValueAtIndex;
-      (self.*fp)(rt, index, value);
+      void (::facebook::jsi::Array::*fp)(Runtime &, size_t, Value &&) = ::facebook::jsi::Array::setValueAtIndex;
+      (self.*fp)(rt, index, &value);
     }
 
     // Function
@@ -383,7 +383,7 @@ namespace splicer
         const ::facebook::jsi::Value *args,
         ::std::uint32_t count,
         ::std::size_t stride,
-        ::splicer::ffi::c_void *closure);
+        ::jsi_rs::ffi::c_void *closure);
 
     std::unique_ptr<Function> Function_createFromHostFunction(
         Runtime &rt,

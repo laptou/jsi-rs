@@ -12,17 +12,17 @@ fn main() {
     };
 
     let mut includes = vec![
-        base.join("../../../react-native/node_modules/react-native"),
-        base.join("../../../react-native/node_modules/react-native/React"),
-        base.join("../../../react-native/node_modules/react-native/React/Base"),
-        base.join("../../../react-native/node_modules/react-native/ReactCommon/jsi"),
-        base.join("../../../react-native/node_modules/react-native/ReactCommon/callinvoker"),
+        // base.join("vendor/react-native/packages/react-native"),
+        base.join("vendor/react-native/packages/react-native/React"),
+        base.join("vendor/react-native/packages/react-native/React/Base"),
+        base.join("vendor/react-native/packages/react-native/ReactCommon/jsi"),
+        base.join("vendor/react-native/packages/react-native/ReactCommon/callinvoker"),
         base.join("include"),
     ];
 
     if let Some("android") = target_os {
         includes.push(
-            base.join("../../../react-native/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni")
+            base.join("vendor/react-native/packages/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni")
         );
         includes.push(base.join("vendor/fbjni/cxx"));
     }
@@ -31,13 +31,11 @@ fn main() {
         .map(|p| dunce::canonicalize(&p).expect(&format!("missing include path {:?}", p)))
         .collect();
 
-    let mut compiles =
-        vec![base
-            .join("../../../react-native/node_modules/react-native/ReactCommon/jsi/jsi/jsi.cpp")];
+    let mut compiles = vec![base.join("vendor/react-native/packages/react-native/ReactCommon/jsi/jsi/jsi.cpp")];
 
     if let Some("android") = target_os {
         compiles.push(
-            base.join("../../../react-native/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni/ReactCommon/CallInvokerHolder.cpp")
+            base.join("vendor/react-native/packages/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni/ReactCommon/CallInvokerHolder.cpp")
         );
     }
 

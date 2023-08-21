@@ -14,10 +14,10 @@ pub mod ffi {
 
         pub type PreparedJavaScript;
 
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub type ConstPreparedJavaScript;
 
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         fn PreparedJavaScript_asConst(
             js: &SharedPtr<PreparedJavaScript>,
         ) -> SharedPtr<ConstPreparedJavaScript>;
@@ -30,28 +30,28 @@ pub mod ffi {
         pub type Runtime;
 
 
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Runtime_evaluateJavaScript(
             _self: Pin<&mut Runtime>,
             buffer: &SharedPtr<Buffer>,
             source_url: &str,
         ) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Runtime_prepareJavaScript(
             _self: Pin<&mut Runtime>,
             buffer: &SharedPtr<Buffer>,
             source_url: &str,
         ) -> SharedPtr<ConstPreparedJavaScript>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Runtime_evaluatePreparedJavaScript(
             _self: Pin<&mut Runtime>,
             js: &SharedPtr<ConstPreparedJavaScript>,
         ) -> UniquePtr<JsiValue>;
         #[cxx_name = "drainMicrotasks"]
         pub fn drain_microtasks(self: Pin<&mut Runtime>, max_microtasks_hint: i32) -> bool;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Runtime_global(_self: Pin<&mut Runtime>) -> UniquePtr<JsiObject>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Runtime_description(_self: Pin<&mut Runtime>) -> UniquePtr<CxxString>;
         #[cxx_name = "isInspectable"]
         pub fn is_inspectable(self: Pin<&mut Runtime>) -> bool;
@@ -59,7 +59,7 @@ pub mod ffi {
 
         pub type HostObject;
 
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn HostObject_get(
             _self: Pin<&mut HostObject>,
             rt: Pin<&mut Runtime>,
@@ -71,7 +71,7 @@ pub mod ffi {
             name: &PropNameID,
             value: &JsiValue,
         );
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn HostObject_getPropertyNames(
             _self: Pin<&mut HostObject>,
             rt: Pin<&mut Runtime>,
@@ -81,56 +81,56 @@ pub mod ffi {
 
         pub type PropNameID;
 
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn PropNameID_forUtf8(rt: Pin<&mut Runtime>, str: &str) -> UniquePtr<PropNameID>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn PropNameID_forString(
             rt: Pin<&mut Runtime>,
             str: &JsiString,
         ) -> UniquePtr<PropNameID>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn PropNameID_toUtf8(_self: &PropNameID, rt: Pin<&mut Runtime>)
             -> UniquePtr<CxxString>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn PropNameID_compare(
             rt: Pin<&mut Runtime>,
             lhs: &PropNameID,
             rhs: &PropNameID,
         ) -> bool;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn PropNameID_copy(_self: &PropNameID, rt: Pin<&mut Runtime>) -> UniquePtr<PropNameID>;
 
         #[cxx_name = "Symbol"]
         pub type JsiSymbol;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Symbol_compare(rt: Pin<&mut Runtime>, lhs: &JsiSymbol, rhs: &JsiSymbol) -> bool;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Symbol_toString(_self: &JsiSymbol, rt: Pin<&mut Runtime>) -> UniquePtr<CxxString>;
 
         #[cxx_name = "String"]
         pub type JsiString;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn String_fromUtf8(rt: Pin<&mut Runtime>, str: &str) -> UniquePtr<JsiString>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn String_compare(rt: Pin<&mut Runtime>, lhs: &JsiString, rhs: &JsiString) -> bool;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn String_toString(_self: &JsiString, rt: Pin<&mut Runtime>) -> UniquePtr<CxxString>;
 
         #[cxx_name = "Object"]
         pub type JsiObject;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_create(rt: Pin<&mut Runtime>) -> UniquePtr<JsiObject>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_createFromHostObjectShared(
             rt: Pin<&mut Runtime>,
             ho: SharedPtr<HostObject>,
         ) -> UniquePtr<JsiObject>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_createFromHostObjectUnique(
             rt: Pin<&mut Runtime>,
             ho: UniquePtr<HostObject>,
         ) -> UniquePtr<JsiObject>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_compare(rt: Pin<&mut Runtime>, lhs: &JsiObject, rhs: &JsiObject) -> bool;
         #[cxx_name = "instanceOf"]
         pub fn instance_of(
@@ -138,7 +138,7 @@ pub mod ffi {
             rt: Pin<&mut Runtime>,
             ctor: &JsiFunction,
         ) -> bool;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_getProperty(
             _self: &JsiObject,
             rt: Pin<&mut Runtime>,
@@ -146,7 +146,7 @@ pub mod ffi {
         ) -> UniquePtr<JsiValue>;
         #[cxx_name = "hasProperty"]
         pub fn has_property(self: &JsiObject, rt: Pin<&mut Runtime>, prop: &PropNameID) -> bool;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_setProperty(
             _self: Pin<&mut JsiObject>,
             rt: Pin<&mut Runtime>,
@@ -160,7 +160,7 @@ pub mod ffi {
         #[cxx_name = "isFunction"]
         pub fn is_function(self: &JsiObject, rt: Pin<&mut Runtime>) -> bool;
         // TODO: isHostObject after implementing Rust HostObject subclass
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_asArray(
             _self: &JsiObject,
             rt: Pin<&mut Runtime>,
@@ -168,22 +168,22 @@ pub mod ffi {
         // NOTICE: this method will assert if the object is not an array buffer;
         // i'm not sure if that's the same as an exception or whether it will
         // lead to UB
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_asArrayBuffer(
             _self: &JsiObject,
             rt: Pin<&mut Runtime>,
         ) -> Result<UniquePtr<JsiArrayBuffer>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_asFunction(
             _self: &JsiObject,
             rt: Pin<&mut Runtime>,
         ) -> Result<UniquePtr<JsiFunction>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_asHostObject(
             _self: &JsiObject,
             rt: Pin<&mut Runtime>,
         ) -> Result<SharedPtr<HostObject>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Object_getPropertyNames(
             _self: Pin<&mut JsiObject>,
             rt: Pin<&mut Runtime>,
@@ -191,12 +191,12 @@ pub mod ffi {
 
         #[cxx_name = "WeakObject"]
         pub type JsiWeakObject;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn WeakObject_fromObject(
             rt: Pin<&mut Runtime>,
             object: &JsiObject,
         ) -> UniquePtr<JsiWeakObject>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn WeakObject_lock(
             _self: Pin<&mut JsiWeakObject>,
             rt: Pin<&mut Runtime>,
@@ -204,15 +204,15 @@ pub mod ffi {
 
         #[cxx_name = "Array"]
         pub type JsiArray;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Array_createWithLength(rt: Pin<&mut Runtime>, length: usize) -> UniquePtr<JsiArray>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Array_get(
             _self: &JsiArray,
             rt: Pin<&mut Runtime>,
             index: usize,
         ) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Array_set(
             _self: Pin<&mut JsiArray>,
             rt: Pin<&mut Runtime>,
@@ -228,26 +228,26 @@ pub mod ffi {
 
         #[cxx_name = "Function"]
         pub type JsiFunction;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Function_call(
             _self: &JsiFunction,
             rt: Pin<&mut Runtime>,
             args: &CxxVector<JsiValue>,
         ) -> Result<UniquePtr<JsiValue>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Function_callAsConstructor(
             _self: &JsiFunction,
             rt: Pin<&mut Runtime>,
             args: &CxxVector<JsiValue>,
         ) -> Result<UniquePtr<JsiValue>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Function_callWithThis(
             _self: &JsiFunction,
             rt: Pin<&mut Runtime>,
             thisObj: &JsiObject,
             args: &CxxVector<JsiValue>,
         ) -> Result<UniquePtr<JsiValue>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub unsafe fn Function_createFromHostFunction(
             rt: Pin<&mut Runtime>,
             name: &PropNameID,
@@ -259,40 +259,40 @@ pub mod ffi {
 
         #[cxx_name = "Value"]
         pub type JsiValue;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromUndefined() -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromNull() -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromBool(b: bool) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromDouble(d: f64) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromInt(i: i32) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromString(
             rt: Pin<&mut Runtime>,
             s: UniquePtr<JsiString>,
         ) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromObject(
             rt: Pin<&mut Runtime>,
             o: UniquePtr<JsiObject>,
         ) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromSymbol(
             rt: Pin<&mut Runtime>,
             s: UniquePtr<JsiSymbol>,
         ) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_copyFromString(rt: Pin<&mut Runtime>, s: &JsiString) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_copyFromObject(rt: Pin<&mut Runtime>, o: &JsiObject) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_copyFromSymbol(rt: Pin<&mut Runtime>, s: &JsiSymbol) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_fromJson(rt: Pin<&mut Runtime>, s: &str) -> UniquePtr<JsiValue>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_compare(rt: Pin<&mut Runtime>, lhs: &JsiValue, rhs: &JsiValue) -> bool;
         #[cxx_name = "isUndefined"]
         pub fn is_undefined(self: &JsiValue) -> bool;
@@ -312,24 +312,24 @@ pub mod ffi {
         pub fn get_bool(self: &JsiValue) -> Result<bool>;
         #[cxx_name = "asNumber"]
         pub fn get_number(self: &JsiValue) -> Result<f64>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_asString(
             _self: &JsiValue,
             rt: Pin<&mut Runtime>,
         ) -> Result<UniquePtr<JsiString>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_asObject(
             _self: &JsiValue,
             rt: Pin<&mut Runtime>,
         ) -> Result<UniquePtr<JsiObject>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_asSymbol(
             _self: &JsiValue,
             rt: Pin<&mut Runtime>,
         ) -> Result<UniquePtr<JsiSymbol>>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_toString(_self: &JsiValue, rt: Pin<&mut Runtime>) -> UniquePtr<JsiString>;
-        #[namespace = "splicer::ffi"]
+        #[namespace = "jsi_rs::ffi"]
         pub fn Value_copy(_self: &JsiValue, rt: Pin<&mut Runtime>) -> UniquePtr<JsiValue>;
     }
 
@@ -340,7 +340,7 @@ pub mod ffi {
         pub type CallInvoker;
     }
 
-    #[namespace = "splicer::ffi"]
+    #[namespace = "jsi_rs::ffi"]
     unsafe extern "C++" {
         pub type c_void;
 
@@ -357,7 +357,7 @@ pub mod ffi {
         pub fn pop_prop_name_vector(vec: Pin<&mut CxxVector<PropNameID>>) -> UniquePtr<PropNameID>;
     }
 
-    #[namespace = "splicer::ffi"]
+    #[namespace = "jsi_rs::ffi"]
     extern "Rust" {
         unsafe fn host_fn_trampoline(
             rt: Pin<&mut Runtime>,

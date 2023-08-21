@@ -5,7 +5,7 @@
 #include "rust/cxx.h"
 #include "jsi/jsi.h"
 
-namespace splicer
+namespace jsi_rs
 {
   namespace ffi
   {
@@ -66,7 +66,7 @@ namespace splicer
     };
 
     ::std::unique_ptr<CxxHostObject> CxxHostObject_create(
-        rust::Box<::splicer::ffi::RustHostObject> rho) noexcept
+        rust::Box<::jsi_rs::ffi::RustHostObject> rho) noexcept
     {
       return std::make_unique<CxxHostObject>(std::move(rho));
     }

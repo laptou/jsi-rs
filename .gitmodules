@@ -1,11 +1,3 @@
-# [submodule "fbjni"]
-# 	path = jsi-sys/vendor/fbjni
-# 	url = https://github.com/facebookincubator/fbjni.git
-#   shallow = true
-# [submodule "react-native"]
-# 	path = jsi-sys/vendor/react-native
-# 	url = https://github.com/facebook/react-native.git
-#   shallow = true
 [submodule "jsi-sys/vendor/react-native"]
 	path = jsi-sys/vendor/react-native
 	url = https://github.com/facebook/react-native.git

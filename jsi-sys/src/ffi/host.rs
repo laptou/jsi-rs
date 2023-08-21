@@ -2,7 +2,7 @@ use crate::shim::{rho_get, rho_properties, rho_set, RustHostObject};
 
 #[cxx::bridge]
 pub(crate) mod ffi {
-    #[namespace = "splicer::ffi"]
+    #[namespace = "jsi_rs::ffi"]
     unsafe extern "C++" {
         include!("host.h");
 
@@ -33,7 +33,7 @@ pub(crate) mod ffi {
         pub fn CxxHostObject_getInnerMut(ptr: Pin<&mut CxxHostObject>) -> &mut RustHostObject;
     }
 
-    #[namespace = "splicer::ffi"]
+    #[namespace = "jsi_rs::ffi"]
     extern "Rust" {
         type RustHostObject<'a>;
 
