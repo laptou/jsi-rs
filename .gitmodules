@@ -1,6 +1,6 @@
-[submodule "jsi-sys/vendor/react-native"]
-	path = jsi-sys/vendor/react-native
+[submodule "react-native"]
+	path = vendor/react-native
 	url = https://github.com/facebook/react-native.git
 [submodule "fbjni"]
-	path = jsi-sys/vendor/fbjni
+	path = vendor/fbjni
 	url = https://github.com/facebookincubator/fbjni.git

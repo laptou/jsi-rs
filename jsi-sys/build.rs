@@ -2,7 +2,7 @@ use std::{env, path::PathBuf};
 
 fn main() {
     let base = env::var_os("CARGO_MANIFEST_DIR").unwrap();
-    let base = PathBuf::from(base);
+    let pkg_base = PathBuf::from(base);
 
     let target_os = env::var_os("CARGO_CFG_TARGET_OS");
     let target_os = if let Some(s) = &target_os {
@@ -11,31 +11,32 @@ fn main() {
         None
     };
 
+    let rn_base = pkg_base.join("../vendor/react-native/packages/react-native");
+
     let mut includes = vec![
-        // base.join("vendor/react-native/packages/react-native"),
-        base.join("vendor/react-native/packages/react-native/React"),
-        base.join("vendor/react-native/packages/react-native/React/Base"),
-        base.join("vendor/react-native/packages/react-native/ReactCommon/jsi"),
-        base.join("vendor/react-native/packages/react-native/ReactCommon/callinvoker"),
-        base.join("include"),
+        rn_base.join("React"),
+        rn_base.join("React/Base"),
+        rn_base.join("ReactCommon/jsi"),
+        rn_base.join("ReactCommon/callinvoker"),
+        pkg_base.join("include"),
     ];
 
     if let Some("android") = target_os {
         includes.push(
-            base.join("vendor/react-native/packages/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni")
+            rn_base.join("ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni"),
         );
-        includes.push(base.join("vendor/fbjni/cxx"));
+        includes.push(pkg_base.join("vendor/fbjni/cxx"));
     }
 
     let includes: Vec<_> = IntoIterator::into_iter(includes)
         .map(|p| dunce::canonicalize(&p).expect(&format!("missing include path {:?}", p)))
         .collect();
 
-    let mut compiles = vec![base.join("vendor/react-native/packages/react-native/ReactCommon/jsi/jsi/jsi.cpp")];
+    let mut compiles = vec![rn_base.join("ReactCommon/jsi/jsi/jsi.cpp")];
 
     if let Some("android") = target_os {
         compiles.push(
-            base.join("vendor/react-native/packages/react-native/ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni/ReactCommon/CallInvokerHolder.cpp")
+            rn_base.join("ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni/ReactCommon/CallInvokerHolder.cpp")
         );
     }
 
