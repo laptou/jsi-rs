@@ -1,5 +1,5 @@
 //! # Host objects
-//! 
+//!
 //! Host objects are used in JSI to create special objects accessible from
 //! JavaScript which have behaviour that is defined in native code.
 

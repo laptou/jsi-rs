@@ -105,7 +105,7 @@ impl Parse for HostEventImpl {
         let enum_impl_generics = if has_rt_lifetime {
             quote! { <'rt> }
         } else {
-            quote! { }
+            quote! {}
         };
 
         let event_impl_def = quote! {

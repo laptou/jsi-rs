@@ -1,4 +1,4 @@
-use std::fmt::{Debug};
+use std::fmt::Debug;
 use std::marker::PhantomData;
 
 use crate::array::JsiArray;

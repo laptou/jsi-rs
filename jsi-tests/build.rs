@@ -62,10 +62,14 @@ fn main() {
     println!("cargo:rustc-link-lib=hermes");
     println!(
         "cargo:rustc-link-search={}",
-        pkg_base.join("../vendor/hermes/build/API/hermes/").to_string_lossy()
+        pkg_base
+            .join("../vendor/hermes/build/API/hermes/")
+            .to_string_lossy()
     );
     println!(
         "cargo:rustc-env=LD_LIBRARY_PATH={}",
-        pkg_base.join("../vendor/hermes/build/API/hermes/").to_string_lossy()
+        pkg_base
+            .join("../vendor/hermes/build/API/hermes/")
+            .to_string_lossy()
     );
 }

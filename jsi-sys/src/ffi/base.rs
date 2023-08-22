@@ -29,7 +29,6 @@ pub mod ffi {
 
         pub type Runtime;
 
-
         #[namespace = "jsi_rs::ffi"]
         pub fn Runtime_evaluateJavaScript(
             _self: Pin<&mut Runtime>,
@@ -133,11 +132,7 @@ pub mod ffi {
         #[namespace = "jsi_rs::ffi"]
         pub fn Object_compare(rt: Pin<&mut Runtime>, lhs: &JsiObject, rhs: &JsiObject) -> bool;
         #[cxx_name = "instanceOf"]
-        pub fn instance_of(
-            self: &JsiObject,
-            rt: Pin<&mut Runtime>,
-            ctor: &JsiFunction,
-        ) -> bool;
+        pub fn instance_of(self: &JsiObject, rt: Pin<&mut Runtime>, ctor: &JsiFunction) -> bool;
         #[namespace = "jsi_rs::ffi"]
         pub fn Object_getProperty(
             _self: &JsiObject,

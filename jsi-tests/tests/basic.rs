@@ -2,7 +2,6 @@ use cxx::UniquePtr;
 
 use jsi_tests::ffi::bridge::*;
 
-
 #[test]
 fn create_runtime() {
     let config = create_runtime_config();

@@ -1,7 +1,7 @@
 use std::marker::PhantomData;
 
 use crate::string::JsiString;
-use crate::{sys, RuntimeClone, RuntimeHandle, RuntimeDisplay, RuntimeEq};
+use crate::{sys, RuntimeClone, RuntimeDisplay, RuntimeEq, RuntimeHandle};
 
 /// A `PropName`, which is used to retrieve properties from `Object`s.
 pub struct PropName<'rt>(
@@ -46,10 +46,6 @@ impl RuntimeDisplay for PropName<'_> {
 
 impl RuntimeEq for PropName<'_> {
     fn eq(&self, other: &Self, rt: &mut RuntimeHandle<'_>) -> bool {
-        sys::PropNameID_compare(
-            rt.get_inner_mut(),
-            &*self.0,
-            &*other.0,
-        )
+        sys::PropNameID_compare(rt.get_inner_mut(), &*self.0, &*other.0)
     }
 }

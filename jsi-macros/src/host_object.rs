@@ -3,8 +3,8 @@ use proc_macro2::{Span, TokenStream};
 use proc_macro_error::{abort, emit_error, emit_warning};
 use quote::{quote, quote_spanned};
 use syn::{
-    parse::Parse, FnArg, GenericParam, Ident, ImplItem, ItemImpl, Lifetime,
-    Token, ImplItemFn, spanned::Spanned, LifetimeParam,
+    parse::Parse, spanned::Spanned, FnArg, GenericParam, Ident, ImplItem, ImplItemFn, ItemImpl,
+    Lifetime, LifetimeParam, Token,
 };
 
 extern crate proc_macro;
@@ -603,7 +603,7 @@ impl Parse for HostObjectImpl {
                       #(#setter_matchers)*
                       _ => {
                         #(#include_setter_matchers)*
-                        
+
                         ::anyhow::bail!("cannot set {}", rt.to_string(&name))
                     },
                   }

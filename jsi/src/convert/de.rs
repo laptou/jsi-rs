@@ -280,7 +280,7 @@ impl<'a, 'rt: 'a, 'de> Deserializer<'de> for JsiDeserializer<'a, 'rt> {
     {
         // trace!("deserialize_bytes: {}", self.value);
         let rt = self.rt;
-        let mut value: JsiArrayBuffer = self
+        let value: JsiArrayBuffer = self
             .value
             .try_into_js(rt)
             .context("the value is not an array buffer")?;
@@ -295,7 +295,7 @@ impl<'a, 'rt: 'a, 'de> Deserializer<'de> for JsiDeserializer<'a, 'rt> {
 
         let rt = self.rt;
 
-        let mut value: JsiArrayBuffer = self
+        let value: JsiArrayBuffer = self
             .value
             .try_into_js(rt)
             .context("the value is not an array buffer")?;
@@ -440,7 +440,7 @@ impl<'a, 'rt: 'a, 'de> Deserializer<'de> for JsiDeserializer<'a, 'rt> {
     {
         // trace!("deserialize_map: {}", self.value);
 
-        let mut rt = self.rt;
+        let rt = self.rt;
         let mut obj: JsiObject = self
             .value
             .try_into_js(rt)

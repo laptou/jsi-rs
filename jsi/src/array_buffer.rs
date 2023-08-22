@@ -4,7 +4,7 @@ use crate::{sys, RuntimeHandle};
 
 /// A JavaScript
 /// [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
-/// Can be used to share large buffers of data with a React Native application. 
+/// Can be used to share large buffers of data with a React Native application.
 pub struct JsiArrayBuffer<'rt>(
     pub(crate) cxx::UniquePtr<sys::JsiArrayBuffer>,
     pub(crate) PhantomData<&'rt mut ()>,
