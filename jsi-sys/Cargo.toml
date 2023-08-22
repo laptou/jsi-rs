@@ -1,12 +1,16 @@
 [package]
 name = "jsi-sys"
-version = "0.3.0"
+version = "0.3.0-alpha.1"
 edition = "2021"
 links = "jsi"
 license = "MIT"
 description = "Low-level interface to React Native JSI"
 authors = ["Ibiyemi Abiodun <ibiyemi@intulon.com>"]
 repository = "https://github.com/laptou/jsi-rs/"
+
+exclude = [
+  "vendor/hermes"
+]
 
 [dependencies]
 cxx = "1.0"

@@ -11,7 +11,7 @@ fn main() {
         None
     };
 
-    let rn_base = pkg_base.join("../vendor/react-native/packages/react-native");
+    let rn_base = pkg_base.join("vendor/react-native/packages/react-native");
 
     let mut includes = vec![
         rn_base.join("React"),
