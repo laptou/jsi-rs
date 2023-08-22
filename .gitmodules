@@ -4,3 +4,6 @@
 [submodule "fbjni"]
 	path = vendor/fbjni
 	url = https://github.com/facebookincubator/fbjni.git
+[submodule "hermes"]
+	path = vendor/hermes
+	url = https://github.com/facebook/hermes.git
