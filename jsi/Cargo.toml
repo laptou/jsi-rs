@@ -2,6 +2,10 @@
 name = "jsi"
 version = "0.3.0"
 edition = "2021"
+license = "MIT"
+description = "Write React Native JSI modules in Rust"
+authors = ["Ibiyemi Abiodun <ibiyemi@intulon.com>"]
+repository = "https://github.com/laptou/jsi-rs/"
 
 [dependencies]
 jsi-sys = { path = "../jsi-sys", version = "0.3.0" }

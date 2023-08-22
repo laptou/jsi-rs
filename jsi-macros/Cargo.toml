@@ -3,7 +3,7 @@ name = "jsi-macros"
 version = "0.3.0"
 edition = "2021"
 license = "MIT"
-description = "Write React Native JSI modules in Rust"
+description = "Support macros for jsi-rs"
 authors = ["Ibiyemi Abiodun <ibiyemi@intulon.com>"]
 repository = "https://github.com/laptou/jsi-rs/"
 
