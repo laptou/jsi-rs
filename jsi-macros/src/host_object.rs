@@ -570,7 +570,7 @@ impl Parse for HostObjectImpl {
         if !has_rt_lifetime {
             generic_params.insert(
                 0,
-                GenericParam::Lifetime(LifetimeParam::new(Lifetime::new("rt", Span::call_site()))),
+                GenericParam::Lifetime(LifetimeParam::new(Lifetime::new("'rt", Span::call_site()))),
             );
         }
 

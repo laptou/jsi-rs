@@ -252,9 +252,10 @@ void Object_setProperty(
     Object &self, Runtime &rt, const PropNameID &name, Value const &value
 ) noexcept
 {
-  void (::facebook::jsi::Object::*fp)(Runtime &, const PropNameID &, Value &&)
-      const = &::facebook::jsi::Object::setProperty;
-  (self.*fp)(rt, name, &value);
+  void (::facebook::jsi::Object::*
+            fp)(Runtime &, const PropNameID &, Value const &) const =
+      &::facebook::jsi::Object::setProperty;
+  (self.*fp)(rt, name, value);
 }
 
 std::unique_ptr<Array> Object_asArray(Object const &self, Runtime &rt)
@@ -330,7 +331,7 @@ std::unique_ptr<Value> Array_get(Array const &self, Runtime &rt, size_t index)
 
 void Array_set(Array &self, Runtime &rt, size_t index, Value const &value)
 {
-  void (::facebook::jsi::Array::*fp)(Runtime &, size_t, Value &&) const =
+  void (::facebook::jsi::Array::*fp)(Runtime &, size_t, Value const &) const =
       &::facebook::jsi::Array::setValueAtIndex;
   (self.*fp)(rt, index, &value);
 }

@@ -92,6 +92,13 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+
+            // if you need to debug your native module in Android Studio, this
+            // will prevent Gradle from stripping out the native symbols that
+            // are needed
+            packagingOptions {
+                doNotStrip '**/libexample_jsi_module.so'
+            }
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

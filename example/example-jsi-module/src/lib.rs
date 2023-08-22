@@ -1,10 +1,13 @@
-use jsi::{FromObject, IntoObject, IntoValue, JsiFn, JsiObject, JsiString, JsiValueKind, PropName, FromValue};
+use jsi::{
+    FromObject, FromValue, IntoValue, JsiFn, JsiObject, JsiString,
+    PropName, RuntimeHandle, JsiValue,
+};
 
 #[cfg(target_os = "android")]
 mod android;
 
 pub fn init(rt: *mut jsi::sys::Runtime, call_invoker: cxx::SharedPtr<jsi::sys::CallInvoker>) {
-    let (mut rt, call_invoker) = jsi::init(rt, call_invoker);
+    let (mut rt, _) = jsi::init(rt, call_invoker);
 
     let console = PropName::new("console", &mut rt);
     let console = rt.global().get(console, &mut rt);
@@ -13,10 +16,12 @@ pub fn init(rt: *mut jsi::sys::Runtime, call_invoker: cxx::SharedPtr<jsi::sys::C
     let console_log = console.get(PropName::new("log", &mut rt), &mut rt);
     let console_log = JsiObject::from_value(&console_log, &mut rt).unwrap();
     let console_log = JsiFn::from_object(&console_log, &mut rt).unwrap();
-    console_log.call(
-        [JsiString::new("hello from Rust", &mut rt).into_value(&mut rt)],
-        &mut rt,
-    );
+    console_log
+        .call(
+            [JsiString::new("hello from Rust", &mut rt).into_value(&mut rt)],
+            &mut rt,
+        )
+        .unwrap();
 
     // we called console.log("hello from Rust") using JSI! you should see the
     // log in your React Native bundler terminal
@@ -26,4 +31,26 @@ pub fn init(rt: *mut jsi::sys::Runtime, call_invoker: cxx::SharedPtr<jsi::sys::C
 
     // make sure that any multithreaded operations use the CallInvoker if they
     // want to call back to JavaScript
+
+    // now, for my next trick, I will add a host object to the global namespace
+    let host_object = ExampleHostObject;
+    let host_object = host_object.into_value(&mut rt);
+
+    rt.global().set(PropName::new("ExampleGlobal", &mut rt), &host_object, &mut rt);
+
+    let global_str = JsiString::new("hallo", &mut rt);
+    let global_str = global_str.into_value(&mut rt);
+    rt.global().set(PropName::new("ExampleGlobal2", &mut rt), &global_str, &mut rt);
+
+    let global_num = JsiValue::new_number(3.200);
+    rt.global().set(PropName::new("ExampleGlobal3", &mut rt), &global_num, &mut rt);
+}
+
+struct ExampleHostObject;
+
+#[host_object]
+impl ExampleHostObject {
+    pub fn time(&self, _rt: &mut RuntimeHandle) -> anyhow::Result<i64> {
+        Ok(3200)
+    }
 }

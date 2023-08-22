@@ -30,6 +30,9 @@ import {
 const {ExampleJsiModule} = NativeModules;
 ExampleJsiModule.install();
 
+// call our global object injected by Rust
+console.log('the current time is: ' + ExampleGlobal.time());
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
