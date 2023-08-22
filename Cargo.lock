@@ -165,7 +165,7 @@ checksum = "56ce8c6da7551ec6c462cbaf3bfbc75131ebbfa1c944aeaa9dab51ca1c5f0c3b"
 
 [[package]]
 name = "example-jsi-module"
-version = "0.1.0"
+version = "0.1.1-alpha.1"
 dependencies = [
  "anyhow",
  "cxx",
@@ -203,7 +203,7 @@ checksum = "8eaf4bc02d17cbdd7ff4c7438cafcdf7fb9a4613313ad11b4f8fefe7d3fa0130"
 
 [[package]]
 name = "jsi"
-version = "0.3.0-alpha.2"
+version = "0.3.0-alpha.3"
 dependencies = [
  "anyhow",
  "better_any",
@@ -217,7 +217,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-macros"
-version = "0.3.0"
+version = "0.3.1-alpha.1"
 dependencies = [
  "Inflector",
  "proc-macro-error",
@@ -228,7 +228,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-sys"
-version = "0.3.0-alpha.1"
+version = "0.3.0-alpha.2"
 dependencies = [
  "anyhow",
  "cxx",
@@ -238,7 +238,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-tests"
-version = "0.3.0"
+version = "0.3.1-alpha.1"
 dependencies = [
  "anyhow",
  "cxx",
