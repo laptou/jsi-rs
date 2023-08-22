@@ -11,6 +11,7 @@ use crate::{
 
 unsafe impl<'rt> Send for JsiObject<'rt> {}
 
+/// A JavaScript `Object`.
 pub struct JsiObject<'rt>(
     pub(crate) cxx::UniquePtr<sys::JsiObject>,
     pub(crate) PhantomData<&'rt mut ()>,

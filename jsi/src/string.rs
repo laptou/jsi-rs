@@ -2,6 +2,7 @@ use std::marker::PhantomData;
 
 use crate::{sys, RuntimeDisplay, RuntimeEq, RuntimeHandle};
 
+/// A JavaScript `String`
 pub struct JsiString<'rt>(
     pub(crate) cxx::UniquePtr<sys::JsiString>,
     pub(crate) PhantomData<&'rt mut ()>,

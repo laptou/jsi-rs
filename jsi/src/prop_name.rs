@@ -3,6 +3,7 @@ use std::marker::PhantomData;
 use crate::string::JsiString;
 use crate::{sys, RuntimeClone, RuntimeHandle, RuntimeDisplay, RuntimeEq};
 
+/// A `PropName`, which is used to retrieve properties from `Object`s.
 pub struct PropName<'rt>(
     pub(crate) cxx::UniquePtr<sys::PropNameID>,
     pub(crate) PhantomData<&'rt mut ()>,

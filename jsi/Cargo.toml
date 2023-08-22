@@ -10,6 +10,7 @@ cxx = "1.0"
 anyhow = "1.0"
 log = { version = "0.4", optional = true }
 better_any = "0.2"
+serde = { version = "1.0", optional = true }
 
 [features]
 default = []
@@ -17,3 +18,4 @@ host-fn-trace = ["log"]
 js-fn-trace = ["log"]
 call-invoker-trace = ["log"]
 macros = ["jsi-macros"]
+serde = ["dep:serde"]

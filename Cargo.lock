@@ -319,6 +319,7 @@ dependencies = [
  "jsi-macros",
  "jsi-sys",
  "log",
+ "serde",
 ]
 
 [[package]]

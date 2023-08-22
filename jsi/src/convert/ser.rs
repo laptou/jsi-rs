@@ -7,6 +7,8 @@ use serde::{
 };
 use jsi::*;
 
+/// Serializes objects into JavaScript via JSI. Useful for transferring Rust
+/// structures and objects from `serde_json` into JavaScript.
 pub struct JsiSerializer<'a, 'rt: 'a> {
     rt: &'a mut RuntimeHandle<'rt>,
 }

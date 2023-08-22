@@ -27,6 +27,8 @@ impl serde::de::Error for JsiDeserializeError {
     }
 }
 
+/// Desrializes objects from JavaScript via JSI. Useful for transferring Rust
+/// structures and objects from `serde_json` from JavaScript.
 pub struct JsiDeserializer<'a, 'rt: 'a> {
     rt: &'a mut RuntimeHandle<'rt>,
     value: JsiValue<'rt>,
