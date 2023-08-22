@@ -203,7 +203,7 @@ checksum = "8eaf4bc02d17cbdd7ff4c7438cafcdf7fb9a4613313ad11b4f8fefe7d3fa0130"
 
 [[package]]
 name = "jsi"
-version = "0.3.0-alpha.3"
+version = "0.3.0-alpha.4"
 dependencies = [
  "anyhow",
  "better_any",
@@ -228,7 +228,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-sys"
-version = "0.3.0-alpha.2"
+version = "0.3.0-alpha.4"
 dependencies = [
  "anyhow",
  "cxx",
