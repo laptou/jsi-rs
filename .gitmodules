@@ -1,9 +1,13 @@
 [submodule "react-native"]
 	path = vendor/react-native
 	url = https://github.com/facebook/react-native.git
+	ignore = dirty
 [submodule "fbjni"]
 	path = vendor/fbjni
 	url = https://github.com/facebookincubator/fbjni.git
+	ignore = dirty
 [submodule "hermes"]
 	path = vendor/hermes
 	url = https://github.com/facebook/hermes.git
+	ignore = dirty
+
