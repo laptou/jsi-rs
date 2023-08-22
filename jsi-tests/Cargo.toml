@@ -3,6 +3,7 @@ name = "jsi-tests"
 version = "0.3.0"
 edition = "2021"
 links = "hermes"
+publish = false
 
 [dependencies]
 cxx = "1.0"
