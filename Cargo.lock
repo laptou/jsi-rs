@@ -217,7 +217,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-macros"
-version = "0.3.1-alpha.1"
+version = "0.3.1-alpha.4"
 dependencies = [
  "Inflector",
  "proc-macro-error",

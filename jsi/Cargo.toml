@@ -9,7 +9,7 @@ repository = "https://github.com/laptou/jsi-rs/"
 
 [dependencies]
 jsi-sys = { path = "../jsi-sys", version = "0.3.0-alpha.4" }
-jsi-macros = { path = "../jsi-macros", version = "0.3.1-alpha.1", optional = true }
+jsi-macros = { path = "../jsi-macros", version = "0.3.1-alpha.4", optional = true }
 cxx = "1.0"
 anyhow = "1.0"
 log = { version = "0.4", optional = true }
