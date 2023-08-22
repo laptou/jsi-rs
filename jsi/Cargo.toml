@@ -8,10 +8,10 @@ jsi-sys = { path = "../jsi-sys" }
 cxx = "1.0"
 anyhow = "1.0"
 log = { version = "0.4", optional = true }
-better_any = "0.1.1"
+better_any = "0.2"
 
 [features]
-default = ["host-fn-trace", "call-invoker-trace", "js-fn-trace"]
+default = []
 host-fn-trace = ["log"]
 js-fn-trace = ["log"]
 call-invoker-trace = ["log"]
