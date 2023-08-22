@@ -1,14 +1,14 @@
 use cxx::UniquePtr;
 
 use jsi_tests::ffi::bridge::*;
-use jsi_sys::*;
+
 
 #[test]
 fn create_runtime() {
     let config = create_runtime_config();
     let rt = create_hermes_runtime(&*config);
     let mut rt: UniquePtr<jsi_sys::Runtime> = cast_hermes_runtime(rt);
-    let mut rt = rt.as_mut().unwrap();
+    let rt = rt.as_mut().unwrap();
     assert_eq!("HermesRuntime", rt.description().to_string());
 }
 
