@@ -37,12 +37,12 @@ impl<'rt> JsiObject<'rt> {
             .has_property(rt.get_inner_mut(), prop.0.as_ref().unwrap())
     }
 
-    pub fn set(&mut self, prop: PropName, value: JsiValue, rt: &mut RuntimeHandle<'rt>) {
+    pub fn set(&mut self, prop: PropName, value: &JsiValue, rt: &mut RuntimeHandle<'rt>) {
         sys::Object_setProperty(
             self.0.pin_mut(),
             rt.get_inner_mut(),
             prop.0.as_ref().unwrap(),
-            value.0,
+            value.0.as_ref().unwrap(),
         )
     }
 

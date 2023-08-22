@@ -1,6 +1,6 @@
 use cxx::UniquePtr;
 
-use splicer_js_tests::ffi::bridge::*;
+use jsi_tests::ffi::bridge::*;
 use jsi::RuntimeHandle;
 use jsi_sys::*;
 

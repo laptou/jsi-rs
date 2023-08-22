@@ -1,4 +1,5 @@
+#!/bin/bash
+set -euxo pipefail
 cd hermes
-utils/build/configure.py
-cd build
-ninja
+cmake -S . -B build -G Ninja
+cmake --build ./build

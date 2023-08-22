@@ -1,10 +1,10 @@
 use cxx::UniquePtr;
 
-use splicer_js_tests::ffi::bridge::*;
+use jsi_tests::ffi::bridge::*;
 use jsi_sys::*;
 
 #[test]
-fn run_host_function() {
+fn create_runtime() {
     let config = create_runtime_config();
     let rt = create_hermes_runtime(&*config);
     let mut rt: UniquePtr<jsi_sys::Runtime> = cast_hermes_runtime(rt);
