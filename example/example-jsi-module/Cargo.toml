@@ -2,6 +2,7 @@
 name = "example-jsi-module"
 version = "0.1.0"
 edition = "2021"
+publish = false
 
 [lib]
 # Android requires dynamic libraries, and iOS requires static ones
