@@ -210,7 +210,6 @@ dependencies = [
  "cxx",
  "jsi-macros",
  "jsi-sys",
- "log",
  "serde",
  "thiserror",
 ]
@@ -234,18 +233,6 @@ dependencies = [
  "cxx",
  "cxx-build",
  "dunce",
-]
-
-[[package]]
-name = "jsi-tests"
-version = "0.3.0"
-dependencies = [
- "anyhow",
- "cxx",
- "cxx-build",
- "dunce",
- "jsi",
- "jsi-sys",
 ]
 
 [[package]]

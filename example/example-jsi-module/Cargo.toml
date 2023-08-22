@@ -1,0 +1,14 @@
+[package]
+name = "example-jsi-module"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+# Android requires dynamic libraries, and iOS requires static ones
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+jsi = { path = "../../jsi" }
+anyhow = { version = "1.0", features = ["backtrace"] }
+jni = "0.21.1"
+cxx = "1.0.106"

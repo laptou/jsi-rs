@@ -63,7 +63,7 @@ pub type JsTaskCallback = Box<
         + Send,
 >;
 
-pub fn jsi_module_init(
+pub fn init(
     rt: *mut sys::Runtime,
     call_invoker: cxx::SharedPtr<sys::CallInvoker>,
 ) -> (RuntimeHandle<'static>, CallInvoker<'static>) {

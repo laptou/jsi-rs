@@ -23,7 +23,7 @@ fn main() {
 
     if let Some("android") = target_os {
         includes.push(
-            rn_base.join("ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni"),
+            rn_base.join("ReactAndroid/src/main/jni/react/turbomodule/"),
         );
         includes.push(pkg_base.join("vendor/fbjni/cxx"));
     }
@@ -36,7 +36,7 @@ fn main() {
 
     if let Some("android") = target_os {
         compiles.push(
-            rn_base.join("ReactAndroid/src/main/java/com/facebook/react/turbomodule/core/jni/ReactCommon/CallInvokerHolder.cpp")
+            rn_base.join("ReactAndroid/src/main/jni/react/turbomodule/ReactCommon/CallInvokerHolder.cpp")
         );
     }
 
