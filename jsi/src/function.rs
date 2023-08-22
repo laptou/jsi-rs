@@ -4,6 +4,7 @@ use anyhow::{bail, Context};
 use std::marker::PhantomData;
 use std::pin::Pin;
 
+/// A JavaScript function.
 pub struct JsiFn<'rt>(
     pub(crate) cxx::UniquePtr<sys::JsiFunction>,
     pub(crate) PhantomData<&'rt mut ()>,

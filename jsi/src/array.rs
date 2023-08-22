@@ -2,6 +2,9 @@ use std::marker::PhantomData;
 
 use crate::{sys, JsiValue, RuntimeHandle};
 
+/// A JavaScript
+/// [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
+/// Can be used to share large buffers of data with a React Native application.
 pub struct JsiArray<'rt>(
     pub(crate) cxx::UniquePtr<sys::JsiArray>,
     pub(crate) PhantomData<&'rt mut ()>,

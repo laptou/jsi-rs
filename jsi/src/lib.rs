@@ -1,6 +1,8 @@
 use std::{pin::Pin, future::Future};
 
 pub use jsi_sys as sys;
+#[cfg(feature = "macros")]
+pub use jsi_macros::host_object;
 
 // allows us to use the proc macros inside this crate
 extern crate self as jsi;

@@ -3,8 +3,8 @@ use proc_macro2::{Span, TokenStream};
 use proc_macro_error::{abort, emit_error, emit_warning};
 use quote::{quote, quote_spanned};
 use syn::{
-    parse::Parse, FnArg, GenericParam, Ident, ImplItem, ImplItemMethod, ItemImpl, Lifetime,
-    LifetimeDef, Token, spanned::Spanned,
+    parse::Parse, FnArg, GenericParam, Ident, ImplItem, ItemImpl, Lifetime,
+    Token, ImplItemFn, spanned::Spanned, LifetimeParam,
 };
 
 extern crate proc_macro;
@@ -85,21 +85,21 @@ impl Parse for HostObjectHelper {
 
 struct HostObjectGetter {
     prop: String,
-    method: ImplItemMethod,
+    method: ImplItemFn,
 }
 
 struct HostObjectSetter {
     prop: String,
-    method: ImplItemMethod,
+    method: ImplItemFn,
 }
 
 struct HostObjectMethod {
     name: String,
-    method: ImplItemMethod,
+    method: ImplItemFn,
 }
 
 struct HostObjectInclude {
-    method: ImplItemMethod,
+    method: ImplItemFn,
 }
 
 pub struct HostObjectImpl(pub TokenStream);
@@ -119,14 +119,14 @@ impl Parse for HostObjectImpl {
 
         for it in &mut impl_block.items {
             match it {
-                ImplItem::Method(it) => {
+                ImplItem::Fn(it) => {
                     let mut helper: Option<HostObjectHelper> = None;
 
                     it.attrs = it
                         .attrs
                         .iter()
                         .map(|attr| {
-                            if !attr.path.is_ident("host_object") {
+                            if !attr.path().is_ident("host_object") {
                                 return Ok(Some(attr.clone()));
                             }
 
@@ -570,7 +570,7 @@ impl Parse for HostObjectImpl {
         if !has_rt_lifetime {
             generic_params.insert(
                 0,
-                GenericParam::Lifetime(LifetimeDef::new(Lifetime::new("rt", Span::call_site()))),
+                GenericParam::Lifetime(LifetimeParam::new(Lifetime::new("rt", Span::call_site()))),
             );
         }
 

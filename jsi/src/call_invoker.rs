@@ -4,6 +4,8 @@ pub use sys::CallInvokerCallback;
 
 use crate::sys;
 
+/// Used to run JavaScript functions in a given runtime from Rust. Required when
+/// trying to call a JavaScript function from a thread other than the JS thread.
 #[derive(Clone)]
 pub struct CallInvoker<'rt>(
     pub(crate) cxx::SharedPtr<sys::CallInvoker>,

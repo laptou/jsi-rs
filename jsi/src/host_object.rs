@@ -1,9 +1,15 @@
+//! # Host objects
+//! 
+//! Host objects are used in JSI to create special objects accessible from
+//! JavaScript which have behaviour that is defined in native code.
+
 use anyhow::bail;
 use std::{marker::PhantomData, pin::Pin};
 
 use crate::{sys, IntoValue, JsTaskCallback, JsiValue, PropName, RuntimeHandle};
 use sys::CallInvokerCallback;
 
+/// An owned host object
 pub struct OwnedJsiHostObject<'rt>(
     pub(crate) cxx::UniquePtr<sys::HostObject>,
     pub(crate) PhantomData<&'rt mut ()>,
@@ -43,11 +49,13 @@ impl<'rt> OwnedJsiHostObject<'rt> {
     }
 }
 
+/// A shared reference to a host object
 pub struct SharedJsiHostObject<'rt>(
     pub(crate) cxx::SharedPtr<sys::HostObject>,
     pub(crate) PhantomData<&'rt mut ()>,
 );
 
+/// Helper trait for implementing a host object in Rust
 pub trait UserHostObject<'rt> {
     fn get(
         &mut self,
@@ -119,7 +127,8 @@ impl<T> Drop for UserHostObjectWrapper<T> {
     }
 }
 
-/// A host object that is implemented in Rust using a [`UserHostObject`] trait object.
+/// A host object that is implemented in Rust using a [`UserHostObject`] trait
+/// object. Start with this if you want to implement a host object.
 pub struct OwnedJsiUserHostObject<'rt>(
     cxx::UniquePtr<sys::CxxHostObject>,
     PhantomData<&'rt mut ()>,

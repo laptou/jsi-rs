@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 jsi-sys = { path = "../jsi-sys" }
+jsi-macros = { path = "../jsi-macros", optional = true }
 cxx = "1.0"
 anyhow = "1.0"
 log = { version = "0.4", optional = true }
@@ -15,3 +16,4 @@ default = []
 host-fn-trace = ["log"]
 js-fn-trace = ["log"]
 call-invoker-trace = ["log"]
+macros = ["jsi-macros"]
