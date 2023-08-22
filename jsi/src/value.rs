@@ -138,7 +138,7 @@ impl RuntimeDisplay for JsiValue<'_> {
     }
 }
 
-impl RuntimeClone for JsiValue<'_> {
+impl RuntimeClone<'_> for JsiValue<'_> {
     fn clone(&self, rt: &mut RuntimeHandle<'_>) -> Self {
         Self(sys::Value_copy(&*self.0, rt.get_inner_mut()), PhantomData)
     }

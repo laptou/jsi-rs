@@ -1,12 +1,11 @@
 use anyhow::Context;
-use log::trace;
+use jsi::{
+    IntoValue, JsiArray, JsiArrayBuffer, JsiFn, JsiObject, JsiString, JsiValue, JsiValueKind,
+    PropName, RuntimeClone, RuntimeHandle,
+};
 use serde::{
     de::{IntoDeserializer, SeqAccess},
     Deserializer,
-};
-use jsi::{
-    IntoValue, JsiArray, JsiArrayBuffer, JsiFn, JsiObject, JsiString, JsiValue, JsiValueKind,
-    PropName, RuntimeHandle,
 };
 use thiserror::Error;
 
@@ -388,12 +387,14 @@ impl<'a, 'rt: 'a, 'de> Deserializer<'de> for JsiDeserializer<'a, 'rt> {
             return Err(anyhow::anyhow!("cannot deserialize non-array sequences yet").into());
         };
 
+        let next = iterator
+            .get(PropName::new("next", rt), rt)
+            .try_into_js(rt)
+            .context("Iterator.next is not a function")?;
+
         visitor.visit_seq(JsiDeserializerSeqAccess {
             rt,
-            next: iterator
-                .get(PropName::new("next", rt), rt)
-                .try_into_js(rt)
-                .context("Iterator.next is not a function")?,
+            next,
             this: iterator,
         })
     }
@@ -499,13 +500,15 @@ impl<'a, 'rt: 'a, 'de> Deserializer<'de> for JsiDeserializer<'a, 'rt> {
                 .context("Object.entries().values() returned a non-object")?
         };
 
+        let next = iterator
+            .get(PropName::new("next", rt), rt)
+            .try_into_js(rt)
+            .context("Iterator.next is not a function")?;
+
         visitor.visit_map(JsiDeserializerMapAccess {
             rt,
             value: None,
-            next: iterator
-                .get(PropName::new("next", rt), rt)
-                .try_into_js(rt)
-                .context("Iterator.next is not a function")?,
+            next,
             this: iterator,
         })
     }
@@ -558,7 +561,8 @@ impl<'a, 'rt: 'a, 'de> Deserializer<'de> for JsiDeserializer<'a, 'rt> {
                     .get(0, self.rt)
                     .try_into_js(self.rt)
                     .context("boops")?;
-                let prop: PropName = PropName::from_string(variant, self.rt);
+
+                let prop: PropName = PropName::from_string(variant.clone(self.rt), self.rt);
 
                 let value = obj.get(prop, self.rt);
 
@@ -605,7 +609,7 @@ impl<'a, 'rt: 'a, 'de> SeqAccess<'de> for JsiTupleVisitor<'a, 'rt> {
     where
         T: serde::de::DeserializeSeed<'de>,
     {
-        let rt = self.rt;
+        let rt = &mut self.rt;
 
         if self.idx < self.len {
             let prop = PropName::new(self.idx.to_string().as_str(), rt);
@@ -732,23 +736,20 @@ impl<'a, 'rt: 'a, 'de> serde::de::SeqAccess<'de> for JsiDeserializerSeqAccess<'a
     where
         T: serde::de::DeserializeSeed<'de>,
     {
-        let rt = self.rt;
+        let rt = &mut self.rt;
         let next = self
             .next
-            .call_with_this(&self.this, std::iter::empty(), self.rt)?;
+            .call_with_this(&self.this, std::iter::empty(), rt)?;
         let next: JsiObject = next
             .try_into_js(rt)
             .context("iterator returned a non-object value")?;
 
-        let done = next.get(PropName::new("done", self.rt), self.rt);
+        let done = next.get(PropName::new("done", rt), rt);
 
-        if !done.is_truthy(self.rt) {
-            let item = next.get(PropName::new("value", self.rt), self.rt);
+        if !done.is_truthy(rt) {
+            let item = next.get(PropName::new("value", rt), rt);
 
-            let item = seed.deserialize(JsiDeserializer {
-                rt: self.rt,
-                value: item,
-            })?;
+            let item = seed.deserialize(JsiDeserializer { rt, value: item })?;
 
             Ok(Some(item))
         } else {
@@ -776,7 +777,7 @@ impl<'a, 'rt: 'a, 'de> serde::de::MapAccess<'de> for JsiDeserializerMapAccess<'a
     where
         K: serde::de::DeserializeSeed<'de>,
     {
-        let rt = self.rt;
+        let rt = &mut self.rt;
 
         let next = self
             .next

@@ -25,7 +25,7 @@ impl<'rt> PropName<'rt> {
     }
 }
 
-impl RuntimeClone for PropName<'_> {
+impl RuntimeClone<'_> for PropName<'_> {
     fn clone(&self, rt: &mut RuntimeHandle<'_>) -> Self {
         PropName(
             sys::PropNameID_copy(self.0.as_ref().unwrap(), rt.get_inner_mut()),

@@ -31,7 +31,7 @@ impl<'rt> RuntimeHandle<'rt> {
         lhs.eq(rhs, self)
     }
 
-    pub fn clone<T: RuntimeClone>(&mut self, it: &T) -> T {
+    pub fn clone<T: RuntimeClone<'rt>>(&mut self, it: &T) -> T {
         it.clone(self)
     }
 
@@ -54,12 +54,12 @@ pub trait RuntimeEq {
     fn eq(&self, other: &Self, rt: &mut RuntimeHandle<'_>) -> bool;
 }
 
-pub trait RuntimeClone {
-    fn clone(&self, rt: &mut RuntimeHandle<'_>) -> Self;
+pub trait RuntimeClone<'rt> {
+    fn clone(&self, rt: &mut RuntimeHandle<'rt>) -> Self;
 }
 
-impl<T: RuntimeClone> RuntimeClone for Vec<T> {
-    fn clone(&self, rt: &mut RuntimeHandle<'_>) -> Self {
+impl<'a, T: RuntimeClone<'a>> RuntimeClone<'a> for Vec<T> {
+    fn clone(&self, rt: &mut RuntimeHandle<'a>) -> Self {
         let mut v = Vec::with_capacity(self.len());
         for i in self {
             v.push(RuntimeClone::clone(i, rt));

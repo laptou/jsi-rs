@@ -1,5 +1,5 @@
 use crate::host_function::UserHostFunction;
-use crate::{sys, JsiObject, JsiValue, PropName, RuntimeHandle, IntoValue};
+use crate::{sys, IntoValue, JsiObject, JsiValue, PropName, RuntimeHandle};
 use anyhow::{bail, Context};
 use std::marker::PhantomData;
 use std::pin::Pin;
@@ -51,12 +51,16 @@ impl<'rt> JsiFn<'rt> {
         ))
     }
 
-    pub fn call_with_this<T: IntoIterator<Item = JsiValue<'rt>>>(
+    pub fn call_with_this<'a, 'ret, T: IntoIterator<Item = JsiValue<'a>>>(
         &self,
         this: &JsiObject,
         args: T,
         rt: &mut RuntimeHandle<'rt>,
-    ) -> Result<JsiValue<'rt>, cxx::Exception> {
+    ) -> Result<JsiValue<'ret>, cxx::Exception>
+    where
+        'rt: 'a,
+        'rt: 'ret,
+    {
         let mut args_cxx = sys::create_value_vector();
         for arg in args {
             sys::push_value_vector(args_cxx.pin_mut(), arg.0);
@@ -128,7 +132,10 @@ impl<'rt> JsiFn<'rt> {
 
 unsafe impl<'rt> Send for JsiFn<'rt> {}
 
-pub fn create_promise<'rt, F: 'rt + FnOnce(JsiFn<'rt>, JsiFn<'rt>, &mut RuntimeHandle<'rt>) -> ()>(
+pub fn create_promise<
+    'rt,
+    F: 'rt + FnOnce(JsiFn<'rt>, JsiFn<'rt>, &mut RuntimeHandle<'rt>) -> (),
+>(
     body: F,
     rt: &mut RuntimeHandle<'rt>,
 ) -> JsiObject<'rt> {

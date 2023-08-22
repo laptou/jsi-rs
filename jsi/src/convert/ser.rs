@@ -87,8 +87,8 @@ impl<'a, 'rt: 'a> Serializer for JsiSerializer<'a, 'rt> {
         Ok(JsiString::new(v, self.rt).into_value(self.rt))
     }
 
-    fn serialize_bytes(self, v: &[u8]) -> Result<Self::Ok, Self::Error> {
-        let mut rt = self.rt;
+    fn serialize_bytes(mut self, v: &[u8]) -> Result<Self::Ok, Self::Error> {
+        let rt = &mut self.rt;
         let array_buffer_ctor = rt.global().get(PropName::new("ArrayBuffer", rt), rt);
         let array_buffer_ctor: JsiFn = array_buffer_ctor
             .try_into_js(rt)
@@ -96,13 +96,13 @@ impl<'a, 'rt: 'a> Serializer for JsiSerializer<'a, 'rt> {
         let array_buffer = array_buffer_ctor
             .call_as_constructor(vec![JsiValue::new_number(v.len() as f64)], rt)
             .expect("ArrayBuffer constructor threw an exception");
-        let mut array_buffer: JsiArrayBuffer = array_buffer
+        let array_buffer: JsiArrayBuffer = array_buffer
             .try_into_js(rt)
             .expect("ArrayBuffer constructor did not return an ArrayBuffer");
 
         array_buffer.data(rt).copy_from_slice(v);
 
-        Ok(array_buffer.into_value(self.rt))
+        Ok(array_buffer.into_value(rt))
     }
 
     fn serialize_none(self) -> Result<Self::Ok, Self::Error> {
@@ -268,7 +268,7 @@ impl<'a, 'rt: 'a> SerializeTuple for JsiTupleSerializer<'a, 'rt> {
     {
         self.obj.set(
             PropName::new(self.idx.to_string().as_str(), self.rt),
-            value.serialize(JsiSerializer { rt: self.rt })?,
+            &value.serialize(JsiSerializer { rt: self.rt })?,
             self.rt,
         );
         self.idx += 1;
@@ -309,7 +309,7 @@ impl<'a, 'rt: 'a> SerializeTupleVariant for JsiTupleVariantSerializer<'a, 'rt> {
     fn end(mut self) -> Result<Self::Ok, Self::Error> {
         self.inner.obj.set(
             PropName::new("__variant", self.inner.rt),
-            JsiValue::new_string(self.variant, self.inner.rt),
+            &JsiValue::new_string(self.variant, self.inner.rt),
             self.inner.rt,
         );
         self.inner.end()
@@ -330,7 +330,7 @@ impl<'a, 'rt: 'a> SerializeTupleStruct for JsiTupleVariantSerializer<'a, 'rt> {
     fn end(mut self) -> Result<Self::Ok, Self::Error> {
         self.inner.obj.set(
             PropName::new("__name", self.inner.rt),
-            JsiValue::new_string(self.variant, self.inner.rt),
+            &JsiValue::new_string(self.variant, self.inner.rt),
             self.inner.rt,
         );
         self.inner.end()
@@ -432,7 +432,7 @@ impl<'a, 'rt: 'a> SerializeStruct for JsiStructSerializer<'a, 'rt> {
     {
         self.obj.set(
             PropName::new(key, self.rt),
-            value.serialize(JsiSerializer { rt: self.rt })?,
+            &value.serialize(JsiSerializer { rt: self.rt })?,
             self.rt,
         );
         Ok(())
@@ -475,7 +475,7 @@ impl<'a, 'rt: 'a> SerializeStructVariant for JsiStructVariantSerializer<'a, 'rt>
     fn end(mut self) -> Result<Self::Ok, Self::Error> {
         self.inner.obj.set(
             PropName::new("__variant", self.inner.rt),
-            JsiValue::new_string(self.variant, self.inner.rt),
+            &JsiValue::new_string(self.variant, self.inner.rt),
             self.inner.rt,
         );
         self.inner.end()
