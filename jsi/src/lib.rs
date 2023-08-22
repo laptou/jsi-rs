@@ -1,4 +1,4 @@
-use std::{future::Future, pin::Pin, sync::mpsc};
+use std::{future::Future, pin::Pin};
 
 #[cfg(feature = "macros")]
 pub use jsi_macros::host_object;
@@ -27,6 +27,8 @@ pub use array_buffer::*;
 pub use call_invoker::*;
 #[cfg(feature = "serde")]
 pub use convert::*;
+#[cfg(feature = "macros")]
+pub use event::*;
 pub use function::*;
 pub use host_function::*;
 pub use host_object::*;
