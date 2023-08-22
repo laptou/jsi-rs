@@ -118,7 +118,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-macros"
-version = "0.1.0"
+version = "0.3.0"
 dependencies = [
  "Inflector",
  "proc-macro-error",
@@ -129,7 +129,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-sys"
-version = "0.1.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "cxx",
@@ -139,7 +139,7 @@ dependencies = [
 
 [[package]]
 name = "jsi-tests"
-version = "0.1.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "cxx",

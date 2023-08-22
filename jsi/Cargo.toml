@@ -4,8 +4,8 @@ version = "0.3.0"
 edition = "2021"
 
 [dependencies]
-jsi-sys = { path = "../jsi-sys" }
-jsi-macros = { path = "../jsi-macros", optional = true }
+jsi-sys = { path = "../jsi-sys", version = "0.3.0" }
+jsi-macros = { path = "../jsi-macros", version = "0.3.0", optional = true }
 cxx = "1.0"
 anyhow = "1.0"
 log = { version = "0.4", optional = true }
