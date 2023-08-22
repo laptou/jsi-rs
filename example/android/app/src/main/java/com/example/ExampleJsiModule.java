@@ -30,14 +30,10 @@ public class ExampleJsiModule extends ReactContextBaseJavaModule {
 
     public ExampleJsiModule(ReactApplicationContext reactContext) {
         super(reactContext);
-
-        android.util.Log.i("ExampleJsiModule", "whee 3");
     }
 
     @Override
     public String getName() {
-        android.util.Log.i("ExampleJsiModule", "whee 5");
-
         return "ExampleJsiModule";
     }
 
