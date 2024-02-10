@@ -1,4 +1,4 @@
-use std::{env, os::unix::process::CommandExt, path::PathBuf, process::Command};
+use std::{env, path::PathBuf, process::Command};
 
 fn main() {
     let pkg_base = env::var_os("CARGO_MANIFEST_DIR").unwrap();
