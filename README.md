@@ -10,7 +10,10 @@ For an example, check out the `example` folder.
 2. Run `git submodule init`
 3. Run `git submodule update`, this will ensure that all the vendor dependencies are cloned locally
 4. Make sure you have Ninja installed locally, which is necessary for building Hermes. You can find instructions [here](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages). On macOS, you can install it with `brew install ninja`
-5. Check that you can build the project with `cargo build --release`
+5. Install dependencies for the example app: `cd example && yarn install`
+6. Run the example app on android with `yarn android`
+
+> NOTE: Make sure that you have not installed rust with homebrew on mac, use the `rustup` toolchain instead.
 
 ## Contributing
 
