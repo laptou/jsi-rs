@@ -1,6 +1,5 @@
 use jsi::{
-    FromObject, FromValue, IntoValue, JsiFn, JsiObject, JsiString,
-    PropName, RuntimeHandle, JsiValue,
+    host_object, FromObject, FromValue, IntoValue, JsiFn, JsiObject, JsiString, JsiValue, PropName, RuntimeHandle
 };
 
 #[cfg(target_os = "android")]
