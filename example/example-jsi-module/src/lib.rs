@@ -5,6 +5,9 @@ use jsi::{
 #[cfg(target_os = "android")]
 mod android;
 
+#[cfg(target_os = "ios")]
+mod ios;
+
 pub fn init(rt: *mut jsi::sys::Runtime, call_invoker: cxx::SharedPtr<jsi::sys::CallInvoker>) {
     let (mut rt, _) = jsi::init(rt, call_invoker);
 
